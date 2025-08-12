@@ -16,7 +16,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchTasks = async () => {
       try {
-        const res = await axios.get('https://taskmanager-backend-production-ab3d.up.railway.app/api/tasks', {
+        const res = await axios.get('https://taskmanager-backend-production-6425.up.railway.app/api/tasks', {
           headers: {
             Authorization: `Bearer ${token}`,
           },

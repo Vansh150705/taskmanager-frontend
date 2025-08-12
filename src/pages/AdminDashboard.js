@@ -40,7 +40,7 @@ function AdminDashboard() {
 
   const fetchEmployees = async () => {
     try {
-      const res = await axios.get('https://taskmanager-backend-production-ab3d.up.railway.app/api/users/employees', {
+      const res = await axios.get('https://taskmanager-backend-sigma.vercel.app//api/users/employees', {
         headers: { Authorization: `Bearer ${token}` },
       });
       setEmployees(res.data);
@@ -94,7 +94,7 @@ function AdminDashboard() {
     e.preventDefault();
     try {
       if (editingTaskId) {
-        await axios.put(`https://taskmanager-backend-production-ab3d.up.railway.app/api/tasks/${editingTaskId}`, form, {
+        await axios.put(`https://taskmanager-backend-sigma.vercel.app//api/tasks/${editingTaskId}`, form, {
           headers: {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
@@ -102,7 +102,7 @@ function AdminDashboard() {
         });
         setMessage('Task updated successfully');
       } else {
-        await axios.post('https://taskmanager-backend-production-ab3d.up.railway.app/api/tasks', form, {
+        await axios.post('https://taskmanager-backend-sigma.vercel.app/api/tasks', form, {
           headers: {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
@@ -146,7 +146,7 @@ function AdminDashboard() {
   const handleDelete = async (taskId) => {
     if (!window.confirm('Are you sure you want to delete this task?')) return;
     try {
-      await axios.delete(`https://taskmanager-backend-production-ab3d.up.railway.app/api/tasks/${taskId}`, {
+      await axios.delete(`https://taskmanager-backend-sigma.vercel.app/api/tasks/${taskId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setMessage('Task deleted');
