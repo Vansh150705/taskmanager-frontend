@@ -11,7 +11,7 @@ function TaskChatbox({ taskId, currentUser }) {
 
   const fetchMessages = async () => {
     try {
-      const res = await axios.get(`https://taskmanager-backend-production-ab3d.up.railway.app/api/messages/${taskId}`, {
+      const res = await axios.get(`https://taskmanager-backend-sigma.vercel.app/api/messages/${taskId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setMessages(res.data);
@@ -26,7 +26,7 @@ function TaskChatbox({ taskId, currentUser }) {
     e.preventDefault();
     try {
       await axios.post(
-        `https://taskmanager-backend-production-ab3d.up.railway.app/api/messages`,
+        `https://taskmanager-backend-sigma.vercel.app/api/messages`,
         { taskId, content },
         {
           headers: {

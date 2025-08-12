@@ -14,7 +14,7 @@ function EmployeeDashboard() {
         const userData = JSON.parse(localStorage.getItem('user'));
         setUser(userData);
 
-        const res = await axios.get('https://taskmanager-backend-production-ab3d.up.railway.app/api/tasks/my-tasks', {
+        const res = await axios.get('https://taskmanager-backend-sigma.vercel.app/api/tasks/my-tasks', {
           headers: { Authorization: `Bearer ${token}` },
         });
         setTasks(res.data);
@@ -30,7 +30,7 @@ function EmployeeDashboard() {
   const updateStatus = async (taskId, newStatus) => {
     try {
       await axios.put(
-        `https://taskmanager-backend-production-ab3d.up.railway.app/api/tasks/${taskId}/status`,
+        `https://taskmanager-backend-sigma.vercel.app/api/tasks/${taskId}/status`,
         { status: newStatus },
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -51,7 +51,7 @@ function EmployeeDashboard() {
   const updateSubTaskStatus = async (taskId, subTaskIndex, newStatus) => {
     try {
       await axios.put(
-        `https://taskmanager-backend-production-ab3d.up.railway.app/api/tasks/${taskId}/subtasks/${subTaskIndex}/status`,
+        `https://taskmanager-backend-sigma.vercel.app/api/tasks/${taskId}/subtasks/${subTaskIndex}/status`,
         { status: newStatus },
         {
           headers: { Authorization: `Bearer ${token}` },

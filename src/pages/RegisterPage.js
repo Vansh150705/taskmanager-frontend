@@ -21,7 +21,7 @@ function Register() {
     setError('');
 
     try {
-      await axios.post('https://taskmanager-backend-production-ab3d.up.railway.app/api/users/register', formData);
+      await axios.post('https://taskmanager-backend-sigma.vercel.app/api/users/register', formData);
       alert('Registration successful! Please login.');
       navigate('/login');
     } catch (err) {

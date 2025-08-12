@@ -13,7 +13,7 @@ function Login() {
     setError('');
 
     try {
-      const res = await axios.post('https://taskmanager-backend-production-ab3d.up.railway.app/api/users/login', {
+      const res = await axios.post('https://taskmanager-backend-sigma.vercel.app/api/users/login', {
         email,
         password,
       });

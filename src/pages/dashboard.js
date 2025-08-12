@@ -37,7 +37,7 @@ const Dashboard = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('https://taskmanager-backend-production-ab3d.up.railway.app/api/tasks', newTask, {
+      const res = await axios.post('https://taskmanager-backend-sigma.vercel.app/api/tasks', newTask, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

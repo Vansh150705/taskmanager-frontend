@@ -16,7 +16,7 @@ function AdminTaskList() {
   const fetchTasks = async () => {
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.get('https://taskmanager-backend-production-ab3d.up.railway.app/api/tasks', {
+      const res = await axios.get('https://taskmanager-backend-sigma.vercel.app/api/tasks', {
         headers: { Authorization: `Bearer ${token}` },
       });
       setTasks(res.data);
@@ -30,7 +30,7 @@ function AdminTaskList() {
   const fetchUsers = async () => {
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.get('https://taskmanager-backend-production-ab3d.up.railway.app/api/users/employees', {
+      const res = await axios.get('https://taskmanager-backend-sigma.vercel.app/api/users/employees', {
         headers: { Authorization: `Bearer ${token}` },
       });
       setUsers(res.data);
@@ -57,7 +57,7 @@ function AdminTaskList() {
     }
 
     try {
-      await axios.post('https://taskmanager-backend-production-ab3d.up.railway.app/api/tasks', formData, {
+      await axios.post('https://taskmanager-backend-sigma.vercel.app/api/tasks', formData, {
         headers: { Authorization: `Bearer ${token}` },
       });
       alert('Task created successfully');

@@ -13,7 +13,7 @@ function TaskForm() {
     const fetchUsers = async () => {
       try {
         const token = localStorage.getItem('token');
-        const res = await axios.get('https://taskmanager-backend-production-ab3d.up.railway.app/api/users/employees', {
+        const res = await axios.get('https://taskmanager-backend-sigma.vercel.app/api/users/employees', {
           headers: { Authorization: `Bearer ${token}` }
         });
         setUsers(res.data);
@@ -29,7 +29,7 @@ function TaskForm() {
     e.preventDefault();
     try {
       const token = localStorage.getItem('token');
-      await axios.post('https://taskmanager-backend-production-ab3d.up.railway.app/api/tasks', {
+      await axios.post('https://taskmanager-backend-sigma.vercel.app/api/tasks', {
         title,
         description,
         assignedTo,

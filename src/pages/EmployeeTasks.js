@@ -8,7 +8,7 @@ function EmployeeTasks() {
   const fetchTasks = async () => {
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.get('https://taskmanager-backend-production-ab3d.up.railway.app/api/tasks/employee', {
+      const res = await axios.get('https://taskmanager-backend-sigma.vercel.app/api/tasks/employee', {
         headers: { Authorization: `Bearer ${token}` },
       });
       setTasks(res.data);
@@ -25,7 +25,7 @@ function EmployeeTasks() {
     try {
       const token = localStorage.getItem('token');
       await axios.put(
-        `https://taskmanager-backend-production-ab3d.up.railway.app/api/tasks/status/${taskId}`,
+        `https://taskmanager-backend-sigma.vercel.app/api/tasks/status/${taskId}`,
         { status: newStatus },
         {
           headers: { Authorization: `Bearer ${token}` },
