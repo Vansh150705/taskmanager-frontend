@@ -18,7 +18,7 @@ function TaskChatbox({ taskId, currentUser }) {
       setError('');
     } catch (error) {
       console.error('Failed to fetch messages', error);
-      setError('❌ Failed to load messages');
+      setError('Failed to load messages');
     }
   };
 
@@ -39,7 +39,7 @@ function TaskChatbox({ taskId, currentUser }) {
       fetchMessages();
     } catch (error) {
       console.error('Failed to send message', error);
-      setError('❌ Failed to send message');
+      setError('Failed to send message');
     }
   };
 

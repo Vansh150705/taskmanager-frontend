@@ -20,7 +20,7 @@ function Login() {
 
       const { token, user } = res.data;
 
-      // Ensure _id is always present (fallback to id)
+      
       const userWithId = {
         ...user,
         _id: user._id || user.id,
@@ -28,7 +28,7 @@ function Login() {
 
       localStorage.setItem('token', token);
       localStorage.setItem('userRole', user.role);
-      localStorage.setItem('user', JSON.stringify(userWithId)); // <--- ✅ fixed line
+      localStorage.setItem('user', JSON.stringify(userWithId)); 
 
       if (user.role === 'admin') {
         navigate('/admin-dashboard');

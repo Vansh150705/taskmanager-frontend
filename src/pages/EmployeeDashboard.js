@@ -98,7 +98,7 @@ function EmployeeDashboard() {
                 <strong>Status:</strong> {task.status}
               </p>
 
-              {/* ✅ Show main task status buttons only if no sub-tasks or only one employee */}
+              {/* Show main task status buttons only if no sub-tasks or only one employee */}
               {(hasNoSubTasks(task) || isOnlyEmployee(task)) && (
                 <div className="mb-3">
                   {task.status?.toLowerCase() !== 'in progress' && (
@@ -120,7 +120,7 @@ function EmployeeDashboard() {
                 </div>
               )}
 
-              {/* ✅ Sub-tasks */}
+              {/* Sub-tasks */}
               {task.subTasks?.length > 0 && (
                 <div className="mt-3">
                   <h6>Sub-Tasks:</h6>
@@ -135,7 +135,7 @@ function EmployeeDashboard() {
                         <strong>Assigned To:</strong>{' '}
                         {sub.assignedTo.map((u) => u.name).join(', ') || 'None'}
 
-                        {/* ✅ Show status update buttons only if logged-in user is assigned */}
+                        {/* Show status update buttons only if logged-in user is assigned */}
                         {sub.assignedTo.some((emp) => emp._id === user._id) && (
                           <div className="mt-2">
                             {sub.status?.toLowerCase() !== 'in progress' && (
@@ -174,7 +174,7 @@ function EmployeeDashboard() {
                 </div>
               )}
 
-              {/* ✅ Chatbox */}
+              {/* Chatbox */}
               {user && (
                 <div className="mt-3">
                   <TaskChatbox taskId={task._id} currentUser={user} />
