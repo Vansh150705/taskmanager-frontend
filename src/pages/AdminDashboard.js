@@ -40,7 +40,7 @@ function AdminDashboard() {
 
   const fetchEmployees = async () => {
     try {
-      const res = await axios.get('https://taskmanager-backend-sigma.vercel.app//api/users/employees', {
+      const res = await axios.get('https://taskmanager-backend-sigma.vercel.app/api/users/employees', {
         headers: { Authorization: `Bearer ${token}` },
       });
       setEmployees(res.data);
