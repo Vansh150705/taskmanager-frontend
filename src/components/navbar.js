@@ -16,8 +16,8 @@ const styles = `
   .nav-inner {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 28px;
-    height: 56px;
+    padding: 0 32px;
+    height: 60px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -27,41 +27,52 @@ const styles = `
   .nav-brand {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     text-decoration: none;
     flex-shrink: 0;
   }
 
-  .nav-brand-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: #2563eb;
+  .nav-brand-icon {
+    width: 30px;
+    height: 30px;
+    background: #1a1916;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
   }
 
-  .nav-brand-label {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: #1a1916;
+  .nav-brand-icon svg {
+    width: 16px;
+    height: 16px;
   }
 
-  .nav-brand-name {
+  .nav-brand-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.15;
+  }
+
+  .nav-brand-title {
     font-family: 'Fraunces', serif;
     font-size: 15px;
     font-weight: 400;
     color: #1a1916;
-    border-left: 1px solid #e2dfd8;
-    padding-left: 12px;
-    margin-left: 4px;
+    letter-spacing: -0.01em;
+  }
+
+  .nav-brand-sub {
+    font-size: 10.5px;
+    font-weight: 400;
+    color: #9b9589;
+    letter-spacing: 0.04em;
   }
 
   .nav-links {
     display: flex;
     align-items: center;
-    gap: 2px;
+    gap: 1px;
     list-style: none;
     margin: 0;
     padding: 0;
@@ -72,7 +83,7 @@ const styles = `
     font-weight: 400;
     color: #6b6762;
     text-decoration: none;
-    padding: 6px 12px;
+    padding: 7px 13px;
     border-radius: 7px;
     transition: color 0.15s ease, background 0.15s ease;
     white-space: nowrap;
@@ -83,9 +94,33 @@ const styles = `
     background: #f4f2ee;
   }
 
-  .nav-link-active {
-    color: #1a1916;
+  .nav-divider {
+    width: 1px;
+    height: 18px;
+    background: #e2dfd8;
+    margin: 0 8px;
+    flex-shrink: 0;
+  }
+
+  .nav-role-badge {
+    font-size: 11px;
     font-weight: 500;
+    padding: 3px 9px;
+    border-radius: 20px;
+    letter-spacing: 0.03em;
+    text-transform: capitalize;
+  }
+
+  .nav-role-admin {
+    background: #eff6ff;
+    color: #2563eb;
+    border: 1px solid #bfdbfe;
+  }
+
+  .nav-role-employee {
+    background: #f0fdf4;
+    color: #16a34a;
+    border: 1px solid #bbf7d0;
   }
 
   .nav-logout {
@@ -95,29 +130,20 @@ const styles = `
     background: transparent;
     border: 1.5px solid #e2dfd8;
     border-radius: 8px;
-    padding: 6px 14px;
+    padding: 7px 16px;
     cursor: pointer;
     font-family: 'DM Sans', sans-serif;
-    margin-left: 6px;
+    margin-left: 4px;
     transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
     white-space: nowrap;
   }
 
   .nav-logout:hover {
-    border-color: #c8c4bc;
-    background: #f7f6f3;
-    color: #1a1916;
+    border-color: #1a1916;
+    background: #1a1916;
+    color: #f7f6f3;
   }
 
-  .nav-divider {
-    width: 1px;
-    height: 18px;
-    background: #e2dfd8;
-    margin: 0 6px;
-    flex-shrink: 0;
-  }
-
-  /* Hamburger */
   .nav-toggle {
     display: none;
     flex-direction: column;
@@ -145,7 +171,6 @@ const styles = `
   .nav-toggle.open span:nth-child(2) { opacity: 0; }
   .nav-toggle.open span:nth-child(3) { transform: translateY(-5.5px) rotate(-45deg); }
 
-  /* Mobile drawer */
   .nav-drawer {
     overflow: hidden;
     max-height: 0;
@@ -154,15 +179,17 @@ const styles = `
   }
 
   .nav-drawer.open {
-    max-height: 300px;
+    max-height: 320px;
     border-top-color: #e8e5df;
   }
 
   .nav-drawer-inner {
-    padding: 12px 28px 16px;
+    padding: 12px 32px 18px;
     display: flex;
     flex-direction: column;
     gap: 2px;
+    list-style: none;
+    margin: 0;
   }
 
   .nav-drawer .nav-link {
@@ -172,7 +199,7 @@ const styles = `
 
   .nav-drawer .nav-logout {
     margin-left: 0;
-    margin-top: 8px;
+    margin-top: 10px;
     width: fit-content;
   }
 
@@ -194,32 +221,39 @@ function Navbar() {
     navigate('/login');
   };
 
-  const NavItems = () => (
+  const NavItems = ({ onClose }) => (
     <>
       {!token && (
         <>
-          <li><Link className="nav-link" to="/login" onClick={() => setOpen(false)}>Login</Link></li>
-          <li><Link className="nav-link" to="/register" onClick={() => setOpen(false)}>Register</Link></li>
+          <li><Link className="nav-link" to="/login" onClick={onClose}>Login</Link></li>
+          <li><Link className="nav-link" to="/register" onClick={onClose}>Register</Link></li>
         </>
       )}
 
       {token && role === 'admin' && (
         <>
-          <li><Link className="nav-link" to="/admin-dashboard" onClick={() => setOpen(false)}>Dashboard</Link></li>
-          <li><Link className="nav-link" to="/create-task" onClick={() => setOpen(false)}>Create Task</Link></li>
-          <li><Link className="nav-link" to="/admin-tasks" onClick={() => setOpen(false)}>All Tasks</Link></li>
+          <li><Link className="nav-link" to="/admin-dashboard" onClick={onClose}>Dashboard</Link></li>
+          <li><Link className="nav-link" to="/create-task" onClick={onClose}>Create Task</Link></li>
+          <li><Link className="nav-link" to="/admin-tasks" onClick={onClose}>All Tasks</Link></li>
         </>
       )}
 
       {token && role === 'employee' && (
-        <li><Link className="nav-link" to="/employee-dashboard" onClick={() => setOpen(false)}>Dashboard</Link></li>
+        <li><Link className="nav-link" to="/employee-dashboard" onClick={onClose}>Dashboard</Link></li>
       )}
 
       {token && (
         <>
           <li className="nav-divider" aria-hidden="true" />
+          {role && (
+            <li>
+              <span className={`nav-role-badge ${role === 'admin' ? 'nav-role-admin' : 'nav-role-employee'}`}>
+                {role}
+              </span>
+            </li>
+          )}
           <li>
-            <button className="nav-logout" onClick={handleLogout}>Logout</button>
+            <button className="nav-logout" onClick={handleLogout}>Sign out</button>
           </li>
         </>
       )}
@@ -232,17 +266,24 @@ function Navbar() {
       <nav className="nav-root">
         <div className="nav-inner">
           <Link className="nav-brand" to="/">
-            <span className="nav-brand-dot" />
-            <span className="nav-brand-label">OMS</span>
-            <span className="nav-brand-name">Office Task</span>
+            <div className="nav-brand-icon">
+              <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="2" y="2" width="5" height="5" rx="1" fill="#f7f6f3"/>
+                <rect x="9" y="2" width="5" height="5" rx="1" fill="#f7f6f3" opacity="0.5"/>
+                <rect x="2" y="9" width="5" height="5" rx="1" fill="#f7f6f3" opacity="0.5"/>
+                <rect x="9" y="9" width="5" height="5" rx="1" fill="#f7f6f3" opacity="0.3"/>
+              </svg>
+            </div>
+            <div className="nav-brand-text">
+              <span className="nav-brand-title">TaskFlow</span>
+              <span className="nav-brand-sub">Office Task Management</span>
+            </div>
           </Link>
 
-          {/* Desktop */}
           <ul className="nav-links">
-            <NavItems />
+            <NavItems onClose={() => {}} />
           </ul>
 
-          {/* Mobile toggle */}
           <button
             className={`nav-toggle${open ? ' open' : ''}`}
             onClick={() => setOpen(!open)}
@@ -252,10 +293,9 @@ function Navbar() {
           </button>
         </div>
 
-        {/* Mobile drawer */}
         <div className={`nav-drawer${open ? ' open' : ''}`}>
-          <ul className="nav-drawer-inner" style={{ listStyle: 'none', margin: 0, padding: 0 }}>
-            <NavItems />
+          <ul className="nav-drawer-inner">
+            <NavItems onClose={() => setOpen(false)} />
           </ul>
         </div>
       </nav>

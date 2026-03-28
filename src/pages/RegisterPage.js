@@ -259,7 +259,7 @@ function Register() {
                 id="reg-name"
                 className="field-input"
                 name="name"
-                placeholder="Jane Smith"
+                placeholder="Vansh Mahajan"
                 value={formData.name}
                 onChange={handleChange}
                 required
@@ -306,7 +306,7 @@ function Register() {
                 <option value="employee">Employee</option>
                 <option value="admin">Admin</option>
               </select>
-              <p className="role-hint">Admins can manage team tasks and members.</p>
+              <p className="role-hint">Admins manage tasks and team members.</p>
             </div>
 
             <button type="submit" className="reg-btn">Create account</button>
