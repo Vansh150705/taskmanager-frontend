@@ -300,7 +300,7 @@ const styles = `
   }
 `;
 
-// ── CAPTCHA helpers ──────────────────────────────────────────
+
 const CHARS = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
 
 function generateCaptchaText(length = 6) {
@@ -351,7 +351,7 @@ function drawCaptcha(canvas, text) {
     ctx.restore();
   }
 }
-// ────────────────────────────────────────────────────────────
+
 
 function Register() {
   const navigate = useNavigate();
@@ -425,7 +425,7 @@ function Register() {
                 id="reg-name"
                 className="field-input"
                 name="name"
-                placeholder="Jane Smith"
+                placeholder="Vansh Mahajan"
                 value={formData.name}
                 onChange={handleChange}
                 required
