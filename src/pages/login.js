@@ -273,7 +273,7 @@ const styles = `
   }
 `;
 
-// ── CAPTCHA helpers ──────────────────────────────────────────
+
 const CHARS = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; // no confusing O/0, I/1
 
 function generateCaptchaText(length = 6) {
@@ -328,7 +328,7 @@ function drawCaptcha(canvas, text) {
     ctx.restore();
   }
 }
-// ────────────────────────────────────────────────────────────
+
 
 function Login() {
   const navigate = useNavigate();

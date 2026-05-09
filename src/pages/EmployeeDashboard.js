@@ -17,7 +17,6 @@ const styles = `
     margin: 0 auto;
   }
 
-  /* ── Page header ── */
   .ed-header {
     margin-bottom: 32px;
   }
@@ -39,7 +38,6 @@ const styles = `
     margin: 0;
   }
 
-  /* ── Empty state ── */
   .ed-empty {
     text-align: center;
     padding: 52px 24px;
@@ -55,7 +53,6 @@ const styles = `
     margin-bottom: 10px;
   }
 
-  /* ── Task card ── */
   .ed-task-card {
     background: #ffffff;
     border: 1px solid #e8e5df;
@@ -150,7 +147,6 @@ const styles = `
     border-color: #bbf7d0;
   }
 
-  /* ── Status action buttons ── */
   .ed-actions {
     display: flex;
     gap: 8px;
@@ -193,14 +189,12 @@ const styles = `
     border-color: #86efac;
   }
 
-  /* ── Section divider ── */
   .ed-divider {
     border: none;
     border-top: 1px solid #f0ede8;
     margin: 0;
   }
 
-  /* ── Sub-tasks section ── */
   .ed-subtasks-section {
     padding: 18px 24px 20px;
     background: #fafaf8;
@@ -262,7 +256,6 @@ const styles = `
     gap: 7px;
   }
 
-  /* ── Chatbox wrapper ── */
   .ed-chat-wrapper {
     padding: 0 24px 24px;
   }
@@ -330,12 +323,25 @@ function EmployeeDashboard() {
     }
   };
 
-  const isOnlyEmployee = (task) => {
-    return task.assignedTo.length === 1 && task.assignedTo[0]._id === user._id;
+  // ── FIXED: handle both _id and id, and any number of assigned employees ──
+  const getUserId = () => user?._id || user?.id;
+
+  const isAssignedToTask = (task) => {
+    const userId = getUserId();
+    return task.assignedTo.some(
+      (emp) => emp._id === userId || emp.id === userId
+    );
   };
 
   const hasNoSubTasks = (task) => {
     return !task.subTasks || task.subTasks.length === 0;
+  };
+
+  const isAssignedToSubTask = (sub) => {
+    const userId = getUserId();
+    return sub.assignedTo.some(
+      (emp) => emp._id === userId || emp.id === userId
+    );
   };
 
   const statusClass = (status) => {
@@ -381,16 +387,28 @@ function EmployeeDashboard() {
                   <div className="ed-task-meta">
                     <div className="ed-meta-item">
                       <span className="ed-meta-label">Deadline</span>
-                      <span>{new Date(task.deadline).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
+                      <span>
+                        {new Date(task.deadline).toLocaleDateString('en-GB', {
+                          day: 'numeric', month: 'short', year: 'numeric'
+                        })}
+                      </span>
                     </div>
                     <div className="ed-meta-item">
                       <span className="ed-meta-label">Status</span>
-                      <span className={`ed-status-badge ${statusClass(task.status)}`}>{task.status}</span>
+                      <span className={`ed-status-badge ${statusClass(task.status)}`}>
+                        {task.status}
+                      </span>
+                    </div>
+                    <div className="ed-meta-item">
+                      <span className="ed-meta-label">Assigned with</span>
+                      <span>
+                        {task.assignedTo.map(emp => emp.name).join(', ')}
+                      </span>
                     </div>
                   </div>
 
-                  {/* Main task status actions */}
-                  {(hasNoSubTasks(task) || isOnlyEmployee(task)) && (
+                  {/* ── FIXED: show buttons if user is assigned to task ── */}
+                  {isAssignedToTask(task) && (
                     <div className="ed-actions">
                       {task.status?.toLowerCase() !== 'in progress' && (
                         <button
@@ -430,7 +448,10 @@ function EmployeeDashboard() {
                           <div className="ed-subtask-meta">
                             <span>
                               <strong style={{ color: '#4a4742' }}>Status:</strong>{' '}
-                              <span className={`ed-status-badge ${statusClass(sub.status)}`} style={{ fontSize: '11px' }}>
+                              <span
+                                className={`ed-status-badge ${statusClass(sub.status)}`}
+                                style={{ fontSize: '11px' }}
+                              >
                                 {sub.status}
                               </span>
                             </span>
@@ -444,7 +465,8 @@ function EmployeeDashboard() {
                             <p className="ed-subtask-desc">{sub.description}</p>
                           ) : null}
 
-                          {sub.assignedTo.some((emp) => emp._id === user._id) && (
+                          {/* ── FIXED: check both _id and id for sub-task ── */}
+                          {isAssignedToSubTask(sub) && (
                             <div className="ed-subtask-actions">
                               {sub.status?.toLowerCase() !== 'in progress' && (
                                 <button
