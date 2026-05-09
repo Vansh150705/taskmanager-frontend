@@ -208,16 +208,28 @@ function TaskChatbox({ taskId, currentUser }) {
   const [error, setError] = useState('');
   const token = localStorage.getItem('token');
   const messagesEndRef = useRef(null);
+  const messagesContainerRef = useRef(null);
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  // ── Only scroll to bottom if user is already near the bottom ──
+  const scrollToBottomIfNeeded = () => {
+    const container = messagesContainerRef.current;
+    if (!container) return;
+
+    const threshold = 80; // px from bottom
+    const isNearBottom =
+      container.scrollHeight - container.scrollTop - container.clientHeight < threshold;
+
+    if (isNearBottom) {
+      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   const fetchMessages = async () => {
     try {
-      const res = await axios.get(`https://taskmanager-backend-sigma.vercel.app/api/messages/${taskId}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await axios.get(
+        `https://taskmanager-backend-sigma.vercel.app/api/messages/${taskId}`,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
       setMessages(res.data);
       setError('');
     } catch (error) {
@@ -241,6 +253,10 @@ function TaskChatbox({ taskId, currentUser }) {
       );
       setContent('');
       fetchMessages();
+      // Always scroll to bottom when USER sends a message
+      setTimeout(() => {
+        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
     } catch (error) {
       console.error('Failed to send message', error);
       setError('Failed to send message');
@@ -253,8 +269,9 @@ function TaskChatbox({ taskId, currentUser }) {
     return () => clearInterval(interval);
   }, [taskId]);
 
+  // ── Only auto-scroll if user is already near the bottom ──
   useEffect(() => {
-    scrollToBottom();
+    scrollToBottomIfNeeded();
   }, [messages]);
 
   return (
@@ -274,12 +291,12 @@ function TaskChatbox({ taskId, currentUser }) {
         </div>
 
         {/* Messages */}
-        <div className="chat-messages">
+        <div className="chat-messages" ref={messagesContainerRef}>
           {messages.length === 0 ? (
             <div className="chat-empty">No messages yet — start the conversation.</div>
           ) : (
             messages.map((msg) => {
-              const isMine = msg.sender._id === currentUser._id;
+              const isMine = msg.sender._id === currentUser._id || msg.sender._id === currentUser.id;
               return (
                 <div
                   key={msg._id}
@@ -299,7 +316,10 @@ function TaskChatbox({ taskId, currentUser }) {
         {/* Error */}
         {error && (
           <div className="chat-error">
-            <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="6" stroke="#f87171" strokeWidth="1.2"/><path d="M6.5 4v3M6.5 8.5v.5" stroke="#f87171" strokeWidth="1.3" strokeLinecap="round"/></svg>
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+              <circle cx="6.5" cy="6.5" r="6" stroke="#f87171" strokeWidth="1.2"/>
+              <path d="M6.5 4v3M6.5 8.5v.5" stroke="#f87171" strokeWidth="1.3" strokeLinecap="round"/>
+            </svg>
             {error}
           </div>
         )}
